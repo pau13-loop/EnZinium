@@ -1,4 +1,4 @@
-package edu.pingpong.enzinium.enZiniumApp;
+package edu.pingpong.enzinium;
 
 /**
  * Contratos inteligentes con enZinium.
