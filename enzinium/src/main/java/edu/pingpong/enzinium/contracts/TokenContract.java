@@ -80,12 +80,22 @@ public class TokenContract {
 
     public void transfer(PublicKey recipient, Double units) {
         try {
-            this.require(balanceOf(this.ownerPK) >= units);
+            this.require(this.balanceOf(this.ownerPK) >= units);
             this.getBalances().compute(this.ownerPK, (PK, tokens) -> tokens - units );
             this.getBalances().put(recipient, balanceOf(recipient) + units);
 
         }
         catch(Exception e){}// --> This is called 'fail silently'
+    }
+
+    public void transfer(PublicKey sender, PublicKey recipient, double units) {
+        try{
+            this.require(this.getBalances().get(sender) >= units);
+            this.getBalances().compute(sender, (PK, tokens) -> tokens - units);
+            this.getBalances().put(recipient, balanceOf(recipient) + units);
+        }
+        catch(Exception e) {}
+
     }
 
     public void require(Boolean holds) throws Exception {
