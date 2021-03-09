@@ -10,30 +10,35 @@ import org.junit.Test;
 
 public class AddressTest {
 
-    private Address address = new Address();
+    private Address mathew = new Address();
     private final double DELTA = 0.01;
 
     @Test 
     public void checkSkPresentTest() {
-        address.generateKeyPair();
-        assertTrue(address.checkSkPresent());
+        mathew.generateKeyPair();
+        assertTrue(mathew.checkSkPresent());
     }
 
     @Test
     public void checkSkNotPresentTest() {
-        assertFalse(address.checkSkPresent());
+        assertFalse(mathew.checkSkPresent());
     }
 
     @Test
     public void checkPkNotNullTest() {
-        address.generateKeyPair();
-        assertNotNull(address.getPK());
+        mathew.generateKeyPair();
+        assertNotNull(mathew.getPK());
     }  
     
     @Test
     public void getBalanceTest() {
-        address.addEZI(500);
-        assertEquals(500 , address.getBalance(), DELTA);
+        mathew.addEZI(500);
+        assertEquals(500 , mathew.getBalance(), DELTA);
     }
 
+    @Test
+    public void transferEZITest() {
+        mathew.transferEZI(25d);
+        assertEquals(25, mathew.getBalance(), DELTA);
+    }
 }
