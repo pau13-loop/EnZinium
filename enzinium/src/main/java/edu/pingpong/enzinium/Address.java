@@ -35,7 +35,7 @@ public class Address {
         return this.balance;
     }
 
-    void setPair() {
+    void generateKeyPair() {
         KeyPair keys = GenSig.generateKeyPair();
         this.setPk(keys.getPublic());
         this.setSK(keys.getPrivate());
@@ -43,6 +43,6 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Public key: " + getPK() + "\nPrivate key: " + getSK();
+        return "Public key: " + getPK().hashCode() + "\nBalance: " + getBalance() + " " + this.symbol;
     }
 }

@@ -20,7 +20,7 @@ public class AddressTest {
 
     @Test 
     public void checkSkPresentTest() {
-        address.setPair();
+        address.generateKeyPair();
         assertTrue(address.checkSkPresent());
     }
 
@@ -31,7 +31,7 @@ public class AddressTest {
 
     @Test
     public void checkPkNotNullTest() {
-        address.setPair();
+        address.generateKeyPair();
         assertNotNull(address.getPK());
     }
 }
