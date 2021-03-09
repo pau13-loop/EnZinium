@@ -75,7 +75,8 @@ public class TokenContractTest {
         //! Test cases for the second transfer method
 
         Address michael = new Address();
-        token.transfer(rachel.getPK(), michael.getPK(), 3);
+        michael.generateKeyPair();
+        token.transfer(rachel.getPK(), michael.getPK(), 3d);
 
         assertEquals(2, token.balanceOf(rachel.getPK()), DELTA);
         assertEquals(3, token.balanceOf(michael.getPK()), DELTA);
@@ -94,9 +95,23 @@ public class TokenContractTest {
 
         token.transfer(rachel.getPK(), 5d);
         Address michael = new Address();
-        token.transfer(rachel.getPK(), michael.getPK(), 10);
+        michael.generateKeyPair();
+        token.transfer(rachel.getPK(), michael.getPK(), 10d);
 
         assertEquals(5, token.balanceOf(rachel.getPK()), DELTA);
         assertEquals(2, token.getBalances().size());
+    }
+
+    @Test
+    public void totalTokensSoldTest() {
+        Address michael = new Address();
+        michael.generateKeyPair();
+        Address greta = new Address();
+        greta.generateKeyPair();
+        token.transfer(rachel.getPK(), 5d);
+        token.transfer(rachel.getPK(), michael.getPK(), 3d);
+        token.transfer(greta.getPK(), 3d);
+
+        assertEquals(8, token.totalTokensSold());
     }
 }
