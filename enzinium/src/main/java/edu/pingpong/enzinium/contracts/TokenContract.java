@@ -2,10 +2,11 @@ package edu.pingpong.enzinium.contracts;
 
 import java.security.PublicKey;
 import java.util.HashMap;
+import java.util.Map;
 
 public class TokenContract {
     
-    private final HashMap<PublicKey, Double> balances = new HashMap<>();
+    private final Map<PublicKey, Double> balances = new HashMap<>();
 
     private PublicKey ownerPK = null;
     private Address owner = null;
@@ -39,7 +40,7 @@ public class TokenContract {
         this.totalSupply = totalSupply;
     }
 
-    public int getTotalSupply() {
+    public int totalSupply() {
         return this.totalSupply;
     }
 
@@ -55,5 +56,13 @@ public class TokenContract {
     public String toString() {
         return "Name: " + this.getName() + 
                 "\nTotal supply: " + this.totalSupply + " " + this.getSymbol();
+    }
+
+    public void addOwner(PublicKey PK, double units) {
+        this.balances.put(PK, units);
+    }
+
+    public int numOwners() {
+        return this.balances.size();
     }
 }
