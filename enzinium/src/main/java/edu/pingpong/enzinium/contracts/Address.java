@@ -1,4 +1,4 @@
-package edu.pingpong.enzinium;
+package edu.pingpong.enzinium.contracts;
 
 import java.security.KeyPair;
 import java.security.PrivateKey;
@@ -35,7 +35,7 @@ public class Address {
         return this.balance;
     }
 
-    void generateKeyPair() {
+    public void generateKeyPair() {
         KeyPair keys = GenSig.generateKeyPair();
         this.setPk(keys.getPublic());
         this.setSK(keys.getPrivate());
@@ -44,5 +44,9 @@ public class Address {
     @Override
     public String toString() {
         return "Public key: " + getPK().hashCode() + "\nBalance: " + getBalance() + " " + this.symbol;
+    }
+
+    void addEZI(double EZI) {
+        this.balance += EZI;
     }
 }

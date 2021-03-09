@@ -1,4 +1,4 @@
-package edu.pingpong.enzinium;
+package edu.pingpong.enzinium.contracts;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -12,11 +12,6 @@ public class AddressTest {
 
     private Address address = new Address();
     private double delta = 0.01;
-    
-    @Test
-    public void getBalanceTest() {
-        assertEquals(0 , address.getBalance(), delta);
-    }
 
     @Test 
     public void checkSkPresentTest() {
@@ -33,5 +28,12 @@ public class AddressTest {
     public void checkPkNotNullTest() {
         address.generateKeyPair();
         assertNotNull(address.getPK());
+    }  
+    
+    @Test
+    public void getBalanceTest() {
+        address.addEZI(500);
+        assertEquals(500 , address.getBalance(), delta);
     }
+
 }
