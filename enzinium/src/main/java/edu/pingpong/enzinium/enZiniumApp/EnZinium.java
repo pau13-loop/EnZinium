@@ -241,5 +241,39 @@ public class EnZinium
         System.out.println("\n" + "Lista de compradores" + "\n" + 
         "===================="        );
         ricknillos.owners();
+
+        /**
+         * Calcula el numero de asistentes al concierto (excluyendo a Rick),
+         * es decir, el numero de entradas vendidas.
+         * 
+         * totalTokensSold()
+         * @return numero de tokens (entradas) vendidos
+         */
+
+        System.out.println("\n" + "Total de asistentes: " 
+                                    + ricknillos.totalTokensSold() + "\n");
+
+        /**
+         * AHORA A POR EL EXCEL·LENT !!
+         * CAN DO !!
+         */
+
+        /**
+         * Vamos a comprar entradas con nuestra moneda enZinium.
+         * 
+         * Añade 20 enZiniums a la direccion de Morty:
+         * 
+         * transferEZI()
+         * @param address del receptor
+         * @param cantidad de enZiniums
+         * Añade la cantidad de EZi al balance de EZI en
+         * la dirección del receptor.
+         */
+
+        morty.transferEZI(20d);
+
+        System.out.println("\n" + "Recarga eZis de Morty" + "\n" + 
+                                  "====================="        );
+        System.out.println(morty.toString());
     }
 }
