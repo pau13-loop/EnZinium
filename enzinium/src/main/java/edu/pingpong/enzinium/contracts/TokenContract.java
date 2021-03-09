@@ -83,7 +83,6 @@ public class TokenContract {
             this.require(this.balanceOf(this.ownerPK) >= units);
             this.getBalances().compute(this.ownerPK, (PK, tokens) -> tokens - units );
             this.getBalances().put(recipient, balanceOf(recipient) + units);
-
         }
         catch(Exception e){}// --> This is called 'fail silently'
     }
@@ -95,12 +94,25 @@ public class TokenContract {
             this.getBalances().put(recipient, balanceOf(recipient) + units);
         }
         catch(Exception e) {}
-
     }
 
     public void require(Boolean holds) throws Exception {
         if(!holds) {
             throw new Exception();
         }
+    }
+
+    public void owners(){
+        for(Map.Entry<PublicKey, Double> entry : this.balances.entrySet()) {
+            if(entry.getKey() != this.ownerPK){
+                System.out.println("Owner: " + entry.getKey().hashCode() + " " + entry.getValue() + " " + this.symbol());
+            }
+        }
+        /** this.getBalances().entrySet()
+                        .stream()
+                        .filter(o -> o != this.ownerPK)
+                        .forEach(System.out.println(this.getBalances()));*/
+
+        // Chequear método David //! INTERESANTE
     }
 }
