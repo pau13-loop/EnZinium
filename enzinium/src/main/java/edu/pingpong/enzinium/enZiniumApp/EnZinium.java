@@ -148,5 +148,55 @@ public class EnZinium
                                 + ricknillos.balanceOf(morty.getPK())
                                 + " "
                                 + ricknillos.symbol());
+
+            /**
+         * Morty quiere comprarle 2 entradas a Rick
+         * 
+         * transfer()
+         * @param PublicKey del destinatario
+         * @param cantidad de tokens
+         * Dada una direccion y una cantidad, transfiere esa cantidad
+         * de tokens a esa direccion, desde el balance de la direccion
+         * propietaria del contrato (la de Rick en este caso).
+         * 
+         * LLama a la funcion require() para comprobar si el propietario 
+         * del contrato dispone de suficientes tokens. Si no hay suficientes,
+         * falla silenciosamente (no hace nada) y no modifica los balances.
+         * 
+         * require()
+         * @param una condicion que ha de verificarse (ser cierta)
+         * Lanza una EXCEPCION si no se cumple la condicion
+         */
+
+        System.out.println("\n" + "Transferencia de entradas" + "\n" + 
+        "========================="        );
+
+        ricknillos.transfer(morty.getPK(), 2d);
+
+        System.out.println("Entradas de Rick: " 
+            + ricknillos.balanceOf(rick.getPK()) 
+            + " "
+            + ricknillos.symbol());
+
+        System.out.println("Entradas de Morty: " 
+            + ricknillos.balanceOf(morty.getPK())
+            + " "
+            + ricknillos.symbol());
+
+        // verifica que require falla si no hay tokens suficientes en el balance de Rick
+        ricknillos.transfer(morty.getPK(), 300d);
+
+        System.out.println("Rick no tiene 300 entradas => entradas de Morty: " 
+                                + ricknillos.balanceOf(morty.getPK())
+                                + " "
+                                + ricknillos.symbol());
+        
+        // Morty vuelve a comprar un par de entradas mas
+        ricknillos.transfer(morty.getPK(), 2d);
+
+        System.out.println("2 entradas mas para Morty: " 
+                                + ricknillos.balanceOf(morty.getPK())
+                                + " "
+                                + ricknillos.symbol());
     }
 }
