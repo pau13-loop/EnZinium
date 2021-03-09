@@ -96,5 +96,30 @@ public class EnZinium
         System.out.println("\n" + "Contrato de los Ricknillos" + "\n" + 
                                   "=========================="        );
         System.out.println(ricknillos.toString());
+
+        /**
+         * El contrato TokenContract contiene una tabla de balances 
+         * de token por propietario:
+         * mapping(propietario => numero de unidades que posee)
+         * Permite al contrato llevar el seguimiento de quien
+         * posee las entradas. 
+         * Cada transferencia de entradas entre propietarios es 
+         * una deducción en un balance y una adicion en el otro.
+         * 
+         * Crea una tabla "balances" que mapee cada propietario 
+         * (su Public Key) al numero de tokens que posee.
+         * Añade a Rick con sus 100 entradas.
+         * Asegurate de que si el propietario (su Public Key) 
+         * ya existe en la tabla, sus unidades no se actualicen.
+         * 
+         * addOwner()
+         * añade el propietario inicial de todos los tokens de este contrato
+         * @param PublicKey del propietario
+         * @param cantidad de tokens que posee
+         */
+
+        ricknillos.addOwner(rick.getPK(), ricknillos.totalSupply());
+        // verifica que Rick no se actualiza una vez que ya existe en el balance
+        ricknillos.addOwner(rick.getPK(), 500d);
     }
 }
