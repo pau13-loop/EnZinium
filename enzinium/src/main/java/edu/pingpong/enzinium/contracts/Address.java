@@ -31,7 +31,7 @@ public class Address {
         return this.getSK() != null ? true : false;
     }
 
-    double getBalance() {
+    public double getBalance() {
         return this.balance;
     }
 
@@ -43,14 +43,21 @@ public class Address {
 
     @Override
     public String toString() {
-        return "\nPublic key: " + getPK().hashCode() + "\nBalance: " + getBalance() + " " + this.symbol;
+        return "\nPublic key: " + getPK().hashCode() + "\nBalance: " + getBalance() + " " + this.symbol + "\n";
     }
 
     void addEZI(double EZI) {
         this.balance += EZI;
     }
 
-    public void transferEZI(double enZiniums) {
-        this.balance += enZiniums;
+    public void transferEZI(double enziniums) {
+        this.balance += enziniums;
+    }
+
+    public void send(TokenContract contract, double enziniums) {
+        if(this.getBalance() >= enziniums){
+            contract.payable(this.getPK(), enziniums);
+            this.balance -= enziniums;
+        }
     }
 }

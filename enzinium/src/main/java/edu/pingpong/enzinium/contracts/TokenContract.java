@@ -20,6 +20,10 @@ public class TokenContract {
         this.owner = owner;
     }
 
+    public Address owner() {
+        return this.owner;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -78,6 +82,8 @@ public class TokenContract {
         return this.getBalances().getOrDefault(owner, 0d);
     }
 
+
+    // transfer sucede una //!SOBRECARGA de métodos
     public void transfer(PublicKey recipient, Double units) {
         try {
             this.require(this.balanceOf(this.ownerPK) >= units);
@@ -141,5 +147,15 @@ public class TokenContract {
                                 .map(n -> n + Map.Entry::getValue);
          */
         
+    }
+
+    public void payable(PublicKey recipient, Double enziniums) {
+        try{
+            require(enziniums >= this.getTokenPrice());
+            Double units = Math.floor(enziniums / tokenPrice);
+            this.transfer(recipient, units);
+            this.owner.transferEZI(enziniums - (enziniums - (tokenPrice * units)));
+        }
+        catch(Exception e) {}
     }
 }
