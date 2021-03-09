@@ -49,4 +49,8 @@ public class Address {
     void addEZI(double EZI) {
         this.balance += EZI;
     }
+
+    public void transferEZI(double enZiniums) {
+        this.balance += enZiniums;
+    }
 }
