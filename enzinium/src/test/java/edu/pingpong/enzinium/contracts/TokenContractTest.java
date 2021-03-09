@@ -11,7 +11,7 @@ public class TokenContractTest {
     private Address jack = null;
     private Address rachel = null;
     private TokenContract token = null;
-    private double delta = 0.01;
+    private final double DELTA = 0.01;
 
     @Before
     public void setupTokenContract() {
@@ -36,8 +36,8 @@ public class TokenContractTest {
 
         assertEquals("RuPaul", token.getName());
         assertEquals("ASCII", token.symbol());
-        assertEquals(69, token.totalSupply(), delta);
-        assertEquals(55.5, token.getTokenPrice(), delta);
+        assertEquals(69, token.totalSupply(), DELTA);
+        assertEquals(55.5, token.getTokenPrice(), DELTA);
     }
 
     @Test
@@ -58,27 +58,45 @@ public class TokenContractTest {
 
     @Test
     public void balanceOfTest() {
-        assertEquals(50, token.balanceOf(jack.getPK()), delta);
+        assertEquals(50, token.balanceOf(jack.getPK()), DELTA);
         // We check for addresses that have never existed, the default case
-        assertEquals(0d, token.balanceOf(rachel.getPK()), delta);
+        assertEquals(0d, token.balanceOf(rachel.getPK()), DELTA);
     }
 
     @Test
-    public void firstTransferTest() {
+    public void transferTest() {
 
-        token.transfer(rachel.getPK(), 10.0);
+        token.transfer(rachel.getPK(), 5d);
 
-        assertEquals(40, token.balanceOf(jack.getPK()), delta);
-        assertEquals(10, token.balanceOf(rachel.getPK()), delta);
+        assertEquals(45, token.balanceOf(jack.getPK()), DELTA);
+        assertEquals(5, token.balanceOf(rachel.getPK()), DELTA);
         assertEquals(2, token.getBalances().size());
+
+        //! Test cases for the second transfer method
+
+        Address michael = new Address();
+        token.transfer(rachel.getPK(), michael.getPK(), 3);
+
+        assertEquals(2, token.balanceOf(rachel.getPK()), DELTA);
+        assertEquals(3, token.balanceOf(michael.getPK()), DELTA);
+        assertEquals(3, token.getBalances().size());
     }
 
     @Test
-    public void firstTransferFailTest() {
+    public void transferFailTest() {
 
-        token.transfer(rachel.getPK(), 60.0);
+        token.transfer(rachel.getPK(), 60d);
 
-        assertEquals(50, token.balanceOf(jack.getPK()), delta);
+        assertEquals(50, token.balanceOf(jack.getPK()), DELTA);
         assertEquals(1, token.getBalances().size());
+
+        //! Test cases for the second transfer method
+
+        token.transfer(rachel.getPK(), 5d);
+        Address michael = new Address();
+        token.transfer(rachel.getPK(), michael.getPK(), 10);
+
+        assertEquals(5, token.balanceOf(rachel.getPK()), DELTA);
+        assertEquals(2, token.getBalances().size());
     }
 }
