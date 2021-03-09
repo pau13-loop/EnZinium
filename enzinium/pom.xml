@@ -82,7 +82,7 @@
                 true
                 </addClasspath>
                 <mainClass>
-                  edu.pingpong.enzinium.enZiniumApp.EnZinium
+                  edu.pingpong.enzinium.EnZinium
                 </mainClass>
             </manifest>
         <manifestEntries>
