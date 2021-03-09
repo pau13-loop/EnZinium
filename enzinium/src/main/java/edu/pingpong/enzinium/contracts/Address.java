@@ -43,7 +43,7 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Public key: " + getPK().hashCode() + "\nBalance: " + getBalance() + " " + this.symbol;
+        return "\nPublic key: " + getPK().hashCode() + "\nBalance: " + getBalance() + " " + this.symbol;
     }
 
     void addEZI(double EZI) {
