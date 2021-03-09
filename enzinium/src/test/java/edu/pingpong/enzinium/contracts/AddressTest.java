@@ -11,7 +11,7 @@ import org.junit.Test;
 public class AddressTest {
 
     private Address address = new Address();
-    private double delta = 0.01;
+    private final double DELTA = 0.01;
 
     @Test 
     public void checkSkPresentTest() {
@@ -33,7 +33,7 @@ public class AddressTest {
     @Test
     public void getBalanceTest() {
         address.addEZI(500);
-        assertEquals(500 , address.getBalance(), delta);
+        assertEquals(500 , address.getBalance(), DELTA);
     }
 
 }
