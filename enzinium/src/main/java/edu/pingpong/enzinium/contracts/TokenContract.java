@@ -12,7 +12,7 @@ public class TokenContract {
     private Address owner = null;
     private String name = null;
     private String symbol = null;
-    private int totalSupply = 0;
+    private double totalSupply = 0d;
     private double tokenPrice = 0d;
 
     public TokenContract(Address owner) {
@@ -36,11 +36,11 @@ public class TokenContract {
         return this.symbol;
     }
 
-    public void setTotalSupply(int totalSupply) {
+    public void setTotalSupply(double totalSupply) {
         this.totalSupply = totalSupply;
     }
 
-    public int totalSupply() {
+    public double totalSupply() {
         return this.totalSupply;
     }
 
@@ -76,5 +76,21 @@ public class TokenContract {
     public double balanceOf(PublicKey owner) {
         //getOrDefault will always return a result, this onw we are asking for or the default value we have assigned
         return this.getBalances().getOrDefault(owner, 0d);
+    }
+
+    public void transfer(PublicKey recipient, Double units) {
+        try {
+            this.require(balanceOf(this.ownerPK) >= units);
+            this.getBalances().compute(this.ownerPK, (PK, tokens) -> tokens - units );
+            this.getBalances().put(recipient, balanceOf(recipient) + units);
+
+        }
+        catch(Exception e){}// --> This is called 'fail silently'
+    }
+
+    public void require(Boolean holds) throws Exception {
+        if(!holds) {
+            throw new Exception();
+        }
     }
 }
