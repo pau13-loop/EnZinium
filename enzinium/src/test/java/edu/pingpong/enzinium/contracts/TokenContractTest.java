@@ -20,8 +20,8 @@ public class TokenContractTest {
         rachel = new Address();
         rachel.generateKeyPair();
 
-
         token = new TokenContract(jack);
+        token.setTokenPrice(5d);
 
         token.addOwner(jack.getPK(), 50);
     }
@@ -113,5 +113,24 @@ public class TokenContractTest {
         token.transfer(greta.getPK(), 3d);
 
         assertEquals(8, token.totalTokensSold());
+    }
+
+    @Test
+    public void payableTest() {
+        rachel.transferEZI(30d);
+        token.payable(rachel.getPK(), rachel.getBalance());
+
+        assertEquals(6, token.balanceOf(rachel.getPK()), DELTA);
+        assertEquals(30, token.owner().getBalance(), DELTA);
+
+        // not enough enziniums
+        token.payable(rachel.getPK(), 1d);
+        assertEquals(6, token.balanceOf(rachel.getPK()), DELTA);
+        assertEquals(30, token.owner().getBalance(), DELTA); 
+
+        //buy a ticket and a half
+        token.payable(rachel.getPK(), 7d);
+        assertEquals(7, token.balanceOf(rachel.getPK()), DELTA);
+        assertEquals(35, token.owner().getBalance(), DELTA);
     }
 }
