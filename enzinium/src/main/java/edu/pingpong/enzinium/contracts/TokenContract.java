@@ -104,7 +104,7 @@ public class TokenContract {
 
     public void owners(){
         for(Map.Entry<PublicKey, Double> entry : this.balances.entrySet()) {
-            if(entry.getKey() != this.ownerPK){
+            if(!entry.getKey().equals(this.ownerPK)){
                 System.out.println("Owner: " + entry.getKey().hashCode() + " " + entry.getValue() + " " + this.symbol());
             }
         }
@@ -114,5 +114,32 @@ public class TokenContract {
                         .forEach(System.out.println(this.getBalances()));*/
 
         // Chequear método David //! INTERESANTE
+
+        //! Método David Felta Gelpi
+        /**
+         * for (PublicKey pk : this.getBalances().keySet()) {
+            if (!pk.equals(this.ownerPK)) {
+                System.out.println("Owner: " + pk.hashCode() + " " 
+                                             + getBalances().get(pk) + " "
+                                             + this.symbol());
+            }
+        }
+         */
+    }
+
+    public int totalTokensSold() {
+        int tokenSold = 0;
+        for(Map.Entry<PublicKey, Double> entry : this.balances.entrySet()) {
+            if(!entry.getKey().equals(this.ownerPK)){
+                tokenSold += entry.getValue();
+            }
+        }
+        return tokenSold;
+        /**
+         * return this.getBalances().entrySet()
+                                .stream()
+                                .map(n -> n + Map.Entry::getValue);
+         */
+        
     }
 }
