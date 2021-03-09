@@ -28,7 +28,7 @@ public class EnZinium
 
         Address rick = new Address();
         rick.generateKeyPair();
-        
+
         /**
          * Visualiza la direccion publica de Rick y su balance
          * 
@@ -39,5 +39,24 @@ public class EnZinium
         System.out.println("\n" + "Address de Rick" + "\n" + 
                                   "==============="        );
         System.out.println(rick.toString());
+
+        /**
+         * Creamos una Address en nuestro sistema para Morty
+         * y otra para Jen y visualizamos su direccion puvlica
+         * y balance
+         */
+        
+        Address morty = new Address();
+        morty.generateKeyPair();
+
+        Address jen = new Address();
+        jen.generateKeyPair();
+
+        System.out.println("\n" + "Address de Morty" + "\n" + 
+                                  "==============="        );
+        System.out.println(morty.toString());  
+        System.out.println("\n" + "Address de Jen" + "\n" + 
+                                  "==============="        );
+        System.out.println(jen.toString());    
     }
 }
