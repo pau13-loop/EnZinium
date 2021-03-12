@@ -28,7 +28,7 @@ public class Address {
     }
 
     boolean checkSkPresent() {
-        return this.getSK() != null ? true : false;
+        return getSK() != null ? true : false;
     }
 
     public double getBalance() {
@@ -37,8 +37,8 @@ public class Address {
 
     public void generateKeyPair() {
         KeyPair keys = GenSig.generateKeyPair();
-        this.setPk(keys.getPublic());
-        this.setSK(keys.getPrivate());
+        setPk(keys.getPublic());
+        setSK(keys.getPrivate());
     }
 
     @Override
@@ -55,8 +55,8 @@ public class Address {
     }
 
     public void send(TokenContract contract, double enziniums) {
-        if (this.getBalance() >= enziniums) {
-            contract.payable(this.getPK(), enziniums);
+        if (getBalance() >= enziniums) {
+            contract.payable(getPK(), enziniums);
             this.balance -= enziniums;
         }
     }

@@ -62,7 +62,7 @@ public class TokenContract {
 
     @Override
     public String toString() {
-        return "\nName: " + this.getName() + "\nSymbol: " + this.symbol() + "\nTotal supply: " + this.totalSupply
+        return "\nName: " + getName() + "\nSymbol: " + symbol() + "\nTotal supply: " + this.totalSupply
                 + "\nOwner Public Key: " + this.ownerPK.hashCode();
     }
 
@@ -79,24 +79,24 @@ public class TokenContract {
     public double balanceOf(PublicKey owner) {
         // getOrDefault will always return a result, this onw we are asking for or the
         // default value we have assigned
-        return this.getBalances().getOrDefault(owner, 0d);
+        return getBalances().getOrDefault(owner, 0d);
     }
 
     // transfer sucede una //!SOBRECARGA de métodos
     public void transfer(PublicKey recipient, Double units) {
         try {
-            this.require(this.balanceOf(this.ownerPK) >= units);
-            this.getBalances().compute(this.ownerPK, (PK, tokens) -> tokens - units);
-            this.getBalances().put(recipient, balanceOf(recipient) + units);
+            require(balanceOf(this.ownerPK) >= units);
+            getBalances().compute(this.ownerPK, (PK, tokens) -> tokens - units);
+            getBalances().put(recipient, balanceOf(recipient) + units);
         } catch (Exception e) {
         } // --> This is called 'fail silently'
     }
 
     public void transfer(PublicKey sender, PublicKey recipient, double units) {
         try {
-            this.require(this.getBalances().get(sender) >= units);
-            this.getBalances().compute(sender, (PK, tokens) -> tokens - units);
-            this.getBalances().put(recipient, balanceOf(recipient) + units);
+            require(getBalances().get(sender) >= units);
+            getBalances().compute(sender, (PK, tokens) -> tokens - units);
+            getBalances().put(recipient, balanceOf(recipient) + units);
         } catch (Exception e) {
         }
     }
@@ -110,7 +110,7 @@ public class TokenContract {
     public void owners() {
         getBalances().keySet().forEach(k -> {
             if (!k.equals(this.ownerPK)) {
-                System.out.println("Owner: " + k.hashCode() + " " + getBalances().get(k) + " " + this.symbol());
+                System.out.println("Owner: " + k.hashCode() + " " + getBalances().get(k) + " " + symbol());
             }
         });
     }
@@ -127,9 +127,9 @@ public class TokenContract {
 
     public void payable(PublicKey recipient, Double enziniums) {
         try {
-            require(enziniums >= this.getTokenPrice());
+            require(enziniums >= getTokenPrice());
             Double units = Math.floor(enziniums / tokenPrice);
-            this.transfer(recipient, units);
+            transfer(recipient, units);
             this.owner.transferEZI(enziniums - (enziniums - (tokenPrice * units)));
         } catch (Exception e) {
         }
