@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TokenContract {
-    
+
     private final Map<PublicKey, Double> balances = new HashMap<>();
 
     private PublicKey ownerPK = null;
@@ -62,14 +62,13 @@ public class TokenContract {
 
     @Override
     public String toString() {
-        return "\nName: " + this.getName() + 
-                "\nSymbol: " + this.symbol() +
-                "\nTotal supply: " + this.totalSupply + 
-                "\nOwner Public Key: " + this.ownerPK.hashCode();
+        return "\nName: " + this.getName() + "\nSymbol: " + this.symbol() + "\nTotal supply: " + this.totalSupply
+                + "\nOwner Public Key: " + this.ownerPK.hashCode();
     }
 
     public void addOwner(PublicKey PK, double units) {
-        //putIfAbsent will add the subject always that still not being included inside the dictionary !
+        // putIfAbsent will add the subject always that still not being included inside
+        // the dictionary !
         this.balances.putIfAbsent(PK, units);
     }
 
@@ -78,84 +77,61 @@ public class TokenContract {
     }
 
     public double balanceOf(PublicKey owner) {
-        //getOrDefault will always return a result, this onw we are asking for or the default value we have assigned
+        // getOrDefault will always return a result, this onw we are asking for or the
+        // default value we have assigned
         return this.getBalances().getOrDefault(owner, 0d);
     }
-
 
     // transfer sucede una //!SOBRECARGA de métodos
     public void transfer(PublicKey recipient, Double units) {
         try {
             this.require(this.balanceOf(this.ownerPK) >= units);
-            this.getBalances().compute(this.ownerPK, (PK, tokens) -> tokens - units );
+            this.getBalances().compute(this.ownerPK, (PK, tokens) -> tokens - units);
             this.getBalances().put(recipient, balanceOf(recipient) + units);
-        }
-        catch(Exception e){}// --> This is called 'fail silently'
+        } catch (Exception e) {
+        } // --> This is called 'fail silently'
     }
 
     public void transfer(PublicKey sender, PublicKey recipient, double units) {
-        try{
+        try {
             this.require(this.getBalances().get(sender) >= units);
             this.getBalances().compute(sender, (PK, tokens) -> tokens - units);
             this.getBalances().put(recipient, balanceOf(recipient) + units);
+        } catch (Exception e) {
         }
-        catch(Exception e) {}
     }
 
     public void require(Boolean holds) throws Exception {
-        if(!holds) {
+        if (!holds) {
             throw new Exception();
         }
     }
 
-    public void owners(){
-        for(Map.Entry<PublicKey, Double> entry : this.balances.entrySet()) {
-            if(!entry.getKey().equals(this.ownerPK)){
-                System.out.println("Owner: " + entry.getKey().hashCode() + " " + entry.getValue() + " " + this.symbol());
+    public void owners() {
+        getBalances().keySet().forEach(k -> {
+            if (!k.equals(this.ownerPK)) {
+                System.out.println("Owner: " + k.hashCode() + " " + getBalances().get(k) + " " + this.symbol());
             }
-        }
-        /** this.getBalances().entrySet()
-                        .stream()
-                        .filter(o -> o != this.ownerPK)
-                        .forEach(System.out.println(this.getBalances()));*/
-
-        // Chequear método David //! INTERESANTE
-
-        //! Método David Felta Gelpi
-        /**
-         * for (PublicKey pk : this.getBalances().keySet()) {
-            if (!pk.equals(this.ownerPK)) {
-                System.out.println("Owner: " + pk.hashCode() + " " 
-                                             + getBalances().get(pk) + " "
-                                             + this.symbol());
-            }
-        }
-         */
+        });
     }
 
     public int totalTokensSold() {
         int tokenSold = 0;
-        for(Map.Entry<PublicKey, Double> entry : this.balances.entrySet()) {
-            if(!entry.getKey().equals(this.ownerPK)){
+        for (Map.Entry<PublicKey, Double> entry : this.balances.entrySet()) {
+            if (!entry.getKey().equals(this.ownerPK)) {
                 tokenSold += entry.getValue();
             }
         }
         return tokenSold;
-        /**
-         * return this.getBalances().entrySet()
-                                .stream()
-                                .map(n -> n + Map.Entry::getValue);
-         */
-        
     }
 
     public void payable(PublicKey recipient, Double enziniums) {
-        try{
+        try {
             require(enziniums >= this.getTokenPrice());
             Double units = Math.floor(enziniums / tokenPrice);
             this.transfer(recipient, units);
             this.owner.transferEZI(enziniums - (enziniums - (tokenPrice * units)));
+        } catch (Exception e) {
         }
-        catch(Exception e) {}
     }
 }

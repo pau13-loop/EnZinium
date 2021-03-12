@@ -5,7 +5,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 
 public class Address {
-    
+
     private PublicKey PK = null;
     private PrivateKey SK = null;
     private double balance = 0d;
@@ -17,7 +17,7 @@ public class Address {
 
     public PublicKey getPK() {
         return this.PK;
-    } 
+    }
 
     private void setSK(PrivateKey SK) {
         this.SK = SK;
@@ -55,7 +55,7 @@ public class Address {
     }
 
     public void send(TokenContract contract, double enziniums) {
-        if(this.getBalance() >= enziniums){
+        if (this.getBalance() >= enziniums) {
             contract.payable(this.getPK(), enziniums);
             this.balance -= enziniums;
         }
