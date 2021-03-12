@@ -10,10 +10,9 @@ import java.security.Signature;
 class GenSig {
 
     /**
-     * Genera el par de clave publica PK
-     * y clave privada SK
-     * La clave pública PK es la dirección pública de la Wallet
-     * La clave privada SK es necesaria para firmar los mensajes 
+     * Genera el par de clave publica PK y clave privada SK La clave pública PK es
+     * la dirección pública de la Wallet La clave privada SK es necesaria para
+     * firmar los mensajes
      */
     static KeyPair generateKeyPair() {
 
@@ -24,19 +23,18 @@ class GenSig {
             keyGen.initialize(1024, random);
             KeyPair pair = keyGen.generateKeyPair();
             return pair;
-        
+
         } catch (Exception e) {
             return null;
         }
     }
 
     /**
-     * Firma el mensaje que acompaña la transaccion
-     * mediante la clave privada de la wallet que 
-     * envia los EnZinIums.
+     * Firma el mensaje que acompaña la transaccion mediante la clave privada de la
+     * wallet que envia los EnZinIums.
      */
     static byte[] sign(PrivateKey sKey, String message) {
-        
+
         try {
 
             // Indicate the message digest algorithm: SHA-1
@@ -53,19 +51,17 @@ class GenSig {
     }
 
     /**
-     * Verifica que la firma del mensaje que acompaña la transaccion
-     * es autentica.
-     * Recibe el mensaje, el mensaje firmado, y la clave publica
-     * que corresponde a la clave privada con la que se firmo 
-     * el mensaje.
+     * Verifica que la firma del mensaje que acompaña la transaccion es autentica.
+     * Recibe el mensaje, el mensaje firmado, y la clave publica que corresponde a
+     * la clave privada con la que se firmo el mensaje.
      */
     static boolean verify(PublicKey pubKey, String message, byte[] signedMessage) {
-        
+
         try {
             // importar la clave publica
             Signature sig = Signature.getInstance("SHA1withDSA", "SUN");
             sig.initVerify(pubKey);
-            
+
             // importar el mensaje
             sig.update(message.getBytes());
 
